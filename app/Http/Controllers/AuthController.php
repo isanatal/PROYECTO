@@ -19,7 +19,7 @@ class AuthController extends Controller
         //validad los datos del formulario
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
-            'email' => 'required|string|email|max:100|unique:usuarios',
+            'email' => 'required|string|email|max:100',
             'password' => 'required|string|min:8|confirmed'
         ]);
 

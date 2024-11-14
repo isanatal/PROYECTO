@@ -1,17 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
-namespace App\Http\Controllers;
-
 use App\Models\Cliente;
 use Illuminate\Http\Request;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Cliente::all();  // Obtiene todos los clientes
+        $clientes = Cliente::paginate(10); 
+        // Obtiene todos los clientes
         return view('clientes.index', compact('clientes'));
     }
 
@@ -32,8 +30,9 @@ class ClienteController extends Controller
 
         // Crear un nuevo cliente
         Cliente::create($request->all());
-
-        return redirect()->route('clientes.index')->with('success', 'Cliente creado correctamente');
+        
+        return redirect()->route('clientes.index');
+        
     }
 
     public function show(Cliente $cliente)
@@ -54,18 +53,21 @@ class ClienteController extends Controller
             'email' => 'required|email|unique:clientes,email,' . $cliente->id,
             'telefono' => 'required|string|max:15',
             'direccion' => 'required|string',
+            
         ]);
 
         // Actualizar el cliente
         $cliente->update($request->all());
 
         return redirect()->route('clientes.index')->with('success', 'Cliente actualizado correctamente');
+        
     }
+
 
     public function destroy(Cliente $cliente)
     {
         $cliente->delete();
-
+        Alert::success('Éxito', 'El cliente ha sido eliminado correctamente')->flash();
         return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
     }
 }

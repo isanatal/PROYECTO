@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Crear Factura</h1>
-    <form action="{{ route('facturas.store') }}" method="POST">
+    <form action="{{ route('facturas.store') }}" method="POST" id="createInvoiceForm">
         @csrf
         <div class="form-group">
             <label for="numero_factura">Número de Factura</label>
@@ -38,4 +38,61 @@
         </div>
         <button type="submit" class="btn btn-primary mt-3">Guardar</button>
     </form>
+
+    <!-- Agregar SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+    <script>
+        // Capturamos el evento de submit del formulario
+        document.getElementById('createInvoiceForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevenimos el envío del formulario
+
+            // Mostramos la alerta de confirmación de SweetAlert
+            Swal.fire({
+                title: '¿Estás seguro de crear esta factura?',
+                text: 'Los datos de la factura se guardarán permanentemente.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, guardar',
+                cancelButtonText: 'Cancelar',
+                customClass: {
+                    confirmButton: 'btn btn-primary', // Personalizar el botón de confirmación
+                    cancelButton: 'btn btn-danger' // Personalizar el botón de cancelación
+                },
+                allowOutsideClick: false,
+                reverseButtons: true,
+                padding: '2em',
+                backdrop: true,
+                heightAuto: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, enviamos el formulario
+                    this.submit();
+                }
+            });
+        });
+
+        // Mostrar mensaje de éxito o error si la creación es exitosa o falla
+        @if(session('status') == 'success')
+            Swal.fire({
+                icon: 'success',
+                title: 'Factura creada',
+                text: 'La factura ha sido creada correctamente.',
+                confirmButtonText: 'Aceptar',
+                customClass: {
+                    confirmButton: 'btn btn-success'
+                }
+            });
+        @elseif(session('status') == 'error')
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al crear',
+                text: 'Hubo un problema al crear la factura.',
+                confirmButtonText: 'Aceptar',
+                customClass: {
+                    confirmButton: 'btn btn-danger'
+                }
+            });
+        @endif
+    </script>
 @endsection

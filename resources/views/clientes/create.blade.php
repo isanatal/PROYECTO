@@ -3,6 +3,18 @@
 @section('content')
     <div class="container">
         <h1>Agregar Cliente</h1>
+
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                });
+            </script>
+        @endif
+
         <form action="{{ route('clientes.store') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -25,3 +37,4 @@
         </form>
     </div>
 @endsection
+

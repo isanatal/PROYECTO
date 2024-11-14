@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <h1>Lista de Facturas</h1>
     <a href="{{ route('facturas.create') }}" class="btn btn-primary">Crear Factura</a>
     <table class="table mt-3">

@@ -21,7 +21,7 @@
                         <td>{{ $cliente->telefono }}</td>
                         <td>
                             <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('clientes.destroy', $cliente) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('clientes.destroy', $cliente) }}" method="POST" style="display:inline;" class="delete-form">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -32,4 +32,33 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Incluir SweetAlert Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <script>
+        // Captura el evento de submit de todos los formularios con clase 'delete-form'
+        document.querySelectorAll('.delete-form').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir el envío inmediato del formulario
+
+                // Mostrar confirmación de SweetAlert
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: 'Esta acción no se puede deshacer.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, enviar el formulario
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+    $clientes = Cliente::paginate(3);
 @endsection

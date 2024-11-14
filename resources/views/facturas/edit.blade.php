@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Editar Factura</h1>
-    <form action="{{ route('facturas.update', $factura->id) }}" method="POST">
+    <form action="{{ route('facturas.update', $factura->id) }}" method="POST" id="editFacturaForm">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -41,4 +41,30 @@
         </div>
         <button type="submit" class="btn btn-primary mt-3">Actualizar</button>
     </form>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            // Añadir un manejador de evento para la confirmación antes de enviar el formulario
+            document.getElementById('editFacturaForm').addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir el envío inmediato del formulario
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¿Quieres actualizar los datos de esta factura?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, actualizar',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, enviar el formulario
+                        e.target.submit();
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection
+
