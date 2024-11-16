@@ -35,4 +35,10 @@
             @endforeach
         </tbody>
     </table>
+
+    <!-- Paginación -->
+    <div class="d-flex justify-content-center">
+        {{ $facturas->links() }}
+    </div>
+
 @endsection
