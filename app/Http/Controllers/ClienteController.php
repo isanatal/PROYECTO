@@ -8,7 +8,7 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Cliente::paginate(10); 
+        $clientes = Cliente::paginate(3); 
         // Obtiene todos los clientes
         return view('clientes.index', compact('clientes'));
     }

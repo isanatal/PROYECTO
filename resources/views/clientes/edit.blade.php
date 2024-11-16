@@ -82,4 +82,5 @@
             });
         @endif
     </script>
+
 @endsection

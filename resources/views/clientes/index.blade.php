@@ -31,6 +31,11 @@
                 @endforeach
             </tbody>
         </table>
+
+        <!-- Enlaces de paginación -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $clientes->links() }}
+        </div>
     </div>
 
     <!-- Incluir SweetAlert Script -->
@@ -60,5 +65,4 @@
             });
         });
     </script>
-    $clientes = Cliente::paginate(3);
 @endsection

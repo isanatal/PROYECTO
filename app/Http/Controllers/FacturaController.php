@@ -11,7 +11,7 @@ class FacturaController extends Controller
     // Mostrar la lista de facturas
     public function index()
     {
-        $facturas = Factura::with('cliente')->get(); // Incluir datos del cliente
+        $facturas = Factura::with('cliente')->paginate(2); // Paginación de 10 facturas por página
         return view('facturas.index', compact('facturas'));
     }
 
